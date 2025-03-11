@@ -1,19 +1,42 @@
 
 #include "push_swap.h"
 
+
+
 int main(int ac, char *av[])
 {
-  t_unit *stack_a = NULL;
-  int i = 0;
-  
-  if (ac == 1)
-    kill("No argements\n");
-     
-  check_args(av);
-  
-  stack_a = malloc(sizeof(t_unit));
-  stack_a->next = NULL;
-  
-  while (av[++i])
-    add_node(&stack_a, atoi(av[i]));
+	char	**split;
+	char	*input;
+	int		*list;
+	int 	len;
+	int		i;
+
+	if (ac == 1)
+		kill("No argements");
+		 
+	check_args(av);
+
+	if (ac > 2)
+		input = combine_args(ac, av);
+	else
+		input = av[1];
+
+	len = count_word(input);
+
+	split = malloc(sizeof(char *) * (len + 1));
+
+	split = ft_split(input, ' ');
+	split[len] = NULL;
+
+	list = (int *)malloc(sizeof(int) * len);
+
+	i = -1;
+	while (split[++i] != NULL)
+		list[i] = atoi(split[i]);
+
+	if (check_dep(list) == 1)
+		kill("Duplicate input");
+
+	print_list(list);
+
 }
