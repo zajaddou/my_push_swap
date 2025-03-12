@@ -3,7 +3,7 @@
 
 void kill(char *flag)
 {
-	printf("E: %s\n", flag);
+	printf("\033[1;31mE: %s\033[0m\n", flag);
 	exit(1);
 }
 
@@ -96,20 +96,60 @@ int check_dep(int *list)
     return (0);
 }
 
-void add_node(t_unit **real, int data)
+void add_node(t_stack **real, int data)
 {
-	t_unit *temp;
-	t_unit *new;
+    t_stack *temp;
+    t_stack *new;
 
-	temp = *real;
+    if (*real == NULL)
+	{
+        *real = malloc(sizeof(t_stack));
+        (*real)->data = data;
+        (*real)->next = NULL;
+    }
+    else {
+        temp = *real;
+        new = malloc(sizeof(t_stack));
+        new->data = data;
+        new->next = NULL;
+        
+        while (temp->next != NULL)
+            temp = temp->next;
+        
+        temp->next = new;
+    }
+}
 
-	new = malloc(sizeof(t_unit));
+int *parsing(int ac, char **av)
+{
+	char	**split;
+	char	*input;
+	int		*list;
+	int 	len;
+	int		i;
 
-	printf("%d\n", data);
-	new->data = data;
-	new->next = NULL;
+	if (ac == 1)
+		kill("No argements");
+		 
+	check_args(av);
 
-	while (temp->next != NULL)
-		temp = temp->next;
-	temp->next = new;
+	if (ac > 2)
+		input = combine_args(ac, av);
+	else
+		input = av[1];
+
+	len = count_word(input);
+
+	split = malloc(sizeof(char *) * (len + 1));
+	split = ft_split(input, ' ');
+	split[len] = NULL;
+
+	list = (int *)malloc(sizeof(int) * len);
+	i = -1;
+	while (split[++i] != NULL)
+		list[i] = atoi(split[i]);
+
+	if (check_dep(list) == 1)
+		kill("Duplicate input");
+	return (list);
 }

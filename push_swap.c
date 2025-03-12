@@ -1,42 +1,23 @@
 
 #include "push_swap.h"
 
-
-
 int main(int ac, char *av[])
 {
-	char	**split;
-	char	*input;
-	int		*list;
-	int 	len;
-	int		i;
+	t_stack *stack_a;
 
-	if (ac == 1)
-		kill("No argements");
-		 
-	check_args(av);
+	int *list = parsing(ac, av);
 
-	if (ac > 2)
-		input = combine_args(ac, av);
-	else
-		input = av[1];
+	while (*list)
+		add_node(&stack_a, *(list++));
 
-	len = count_word(input);
+	printf("Linkd List :");
 
-	split = malloc(sizeof(char *) * (len + 1));
+	t_stack *temp = stack_a;
 
-	split = ft_split(input, ' ');
-	split[len] = NULL;
-
-	list = (int *)malloc(sizeof(int) * len);
-
-	i = -1;
-	while (split[++i] != NULL)
-		list[i] = atoi(split[i]);
-
-	if (check_dep(list) == 1)
-		kill("Duplicate input");
-
-	print_list(list);
-
+	while (temp)
+	{
+		printf("\n%d", temp->data);
+		temp = temp->next;
+	}
+	printf("\n");
 }
