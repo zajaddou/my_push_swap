@@ -78,8 +78,8 @@ void print_list(int *list)
 
 int check_dep(int *list)
 {
-    int	a;
-	int	b;
+    int		a;
+	int		b;
 
     a = 0;
     while (list[a])
@@ -120,7 +120,7 @@ int *parsing(int ac, char **av)
 	split = ft_split(input, ' ');
 	split[len] = NULL;
 
-	list = (int *)malloc(sizeof(int) * len);
+	list = malloc(sizeof(int) * len);
 	i = -1;
 	while (split[++i] != NULL)
 		list[i] = atoi(split[i]);
