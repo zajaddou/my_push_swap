@@ -3,21 +3,13 @@
 
 int main(int ac, char *av[])
 {
-	t_stack *stack_a;
+	t_stack *stack_a = NULL;
 
 	int *list = parsing(ac, av);
 
 	while (*list)
 		add_node(&stack_a, *(list++));
 
-	printf("Linkd List :");
-
-	t_stack *temp = stack_a;
-
-	while (temp)
-	{
-		printf("\n%d", temp->data);
-		temp = temp->next;
-	}
-	printf("\n");
+	index_node(&stack_a);
+	print_node(stack_a);
 }

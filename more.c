@@ -96,30 +96,6 @@ int check_dep(int *list)
     return (0);
 }
 
-void add_node(t_stack **real, int data)
-{
-    t_stack *temp;
-    t_stack *new;
-
-    if (*real == NULL)
-	{
-        *real = malloc(sizeof(t_stack));
-        (*real)->data = data;
-        (*real)->next = NULL;
-    }
-    else {
-        temp = *real;
-        new = malloc(sizeof(t_stack));
-        new->data = data;
-        new->next = NULL;
-        
-        while (temp->next != NULL)
-            temp = temp->next;
-        
-        temp->next = new;
-    }
-}
-
 int *parsing(int ac, char **av)
 {
 	char	**split;
@@ -153,3 +129,4 @@ int *parsing(int ac, char **av)
 		kill("Duplicate input");
 	return (list);
 }
+
