@@ -34,7 +34,7 @@ void print_node(t_stack *stack_a)
 {
 	t_stack *temp = stack_a;
 
-	printf("Linkd List :");
+	printf("\nLinkd List :");
 	while (temp)
 	{
 		printf("\n%d | %d ", temp->index , temp->data);
@@ -50,14 +50,14 @@ void add_node(t_stack **real, int data)
 
     if (*real == NULL)
 	{
-        *real = malloc(sizeof(t_stack));
+        *real = ft_malloc(sizeof(t_stack));
         (*real)->data = data;
         (*real)->index = -1;
         (*real)->next = NULL;
     }
     else {
         temp = *real;
-        new = malloc(sizeof(t_stack));
+        new = ft_malloc(sizeof(t_stack));
         new->data = data;
         new->index = -1;
         new->next = NULL;

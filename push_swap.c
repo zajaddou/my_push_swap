@@ -3,19 +3,22 @@
 
 void leak()
 {
-    system("leaks push_swap");
+	system("leaks push_swap");
 }
 
 int main(int ac, char *av[])
 {
-	atexit(leak);
+	//atexit(leak);
 	t_stack *stack_a = NULL;
 
-	int *list = parsing(ac, av);
-
-	while (*list)
-		add_node(&stack_a, *(list++));
+	int len = 0;
+	int i  = -1; 
+	int *list = parsing(ac, av, &len);
+	
+	while (++i < len)
+		add_node(&stack_a, list[i]);
 
 	index_node(&stack_a);
 	print_node(stack_a);
+
 }

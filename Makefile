@@ -4,7 +4,7 @@ CC= cc
 
 CFLAG= -Wextra -Werror -Wall
 
-MDR= push_swap.c more.c node.c 
+MDR= push_swap.c free.c more.c node.c 
 
 OBJ_M= $(MDR:%.c=%.o)
 

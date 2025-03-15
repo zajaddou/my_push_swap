@@ -1,12 +1,6 @@
 
 #include "push_swap.h"
 
-void kill(char *flag)
-{
-	printf("\033[1;31mE: %s\033[0m\n", flag);
-	exit(1);
-}
-
 int is_valid(char *str)
 {
 	while (*str)
@@ -29,7 +23,7 @@ void check_args(char *av[])
 {
 	while (*(++av))
 		if (!is_valid(*av))
-			kill("Invalid Args");
+			ft_exit("Invalid Args");
 }
 
 int	count_word(char const *s)
@@ -56,24 +50,31 @@ int	count_word(char const *s)
 char *combine_args(int ac, char **av)
 {
 	char	*input;
+	char	*temp;
 	int 	i;
 
 	i = 0;
 	input = NULL;
 	while (++i < ac)
 	{
+		temp = input;
 		input = ft_strjoin(input, av[i]);
+		free(temp);
 		if ((i+1) < ac)
+		{
+			temp = input;
 			input = ft_strjoin(input, " ");
+			free(temp);
+		}
 	}
 	return (input);
 }
 
-void print_list(int *list)
+void print_list(int *list, int len)
 {
 	int i = -1;
-	while (list[++i])
-		printf("%d\n", list[i]);
+	while (++i < len)
+		printf("[%d]\n", list[i]);
 }
 
 int check_dep(int *list)
@@ -96,37 +97,40 @@ int check_dep(int *list)
     return (0);
 }
 
-int *parsing(int ac, char **av)
+int *parsing(int ac, char **av, int *len)
 {
 	char	**split;
 	char	*input;
 	int		*list;
-	int 	len;
 	int		i;
 
 	if (ac == 1)
-		kill("No argements");
-		 
+		ft_exit("No argements");
+
 	check_args(av);
 
-	if (ac > 2)
-		input = combine_args(ac, av);
-	else
-		input = av[1];
-
-	len = count_word(input);
-
-	split = malloc(sizeof(char *) * (len + 1));
+	input = combine_args(ac, av);
+	*len  = count_word(input);
+	split = ft_malloc(sizeof(char *) * (*len + 1));
 	split = ft_split(input, ' ');
-	split[len] = NULL;
+	free(input);
+	split[*len] = NULL;
 
-	list = malloc(sizeof(int) * len);
+	list = ft_malloc(sizeof(int) * (*len));
 	i = -1;
 	while (split[++i] != NULL)
 		list[i] = atoi(split[i]);
 
-	if (check_dep(list) == 1)
-		kill("Duplicate input");
-	return (list);
-}
+	print_list(list, *len);
 
+	// work 
+
+	i = 0;
+	while (split[i] != NULL)
+		free(split[i++]);
+	free(split);
+
+	if (check_dep(list) == 1)
+		ft_exit("Duplicate input");
+	return (list); 
+}
